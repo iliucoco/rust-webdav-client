@@ -1,0 +1,91 @@
+{
+  "app": {
+    "title": "WebDAV 客户端"
+  },
+  "connection": {
+    "title": "连接",
+    "add": "+ 新建",
+    "new": "新建连接",
+    "edit": "编辑连接",
+    "name": "名称",
+    "namePlaceholder": "名称",
+    "url": "地址",
+    "urlPlaceholder": "WebDAV 地址（如 https://dav.example.com/）",
+    "username": "用户名",
+    "usernamePlaceholder": "用户名",
+    "password": "密码",
+    "passwordPlaceholder": "密码",
+    "save": "保存",
+    "test": "测试",
+    "testing": "测试中...",
+    "cancel": "取消",
+    "testSuccess": "连接成功！",
+    "testFailed": "连接失败",
+    "testError": "连接错误：{error}",
+    "saveSuccess": "连接已保存",
+    "saveFailed": "保存失败：{error}",
+    "requiredFields": "请填写地址和用户名后再测试",
+    "allRequired": "请填写所有必填项",
+    "noConnections": "暂无连接。",
+    "noConnectionsHint": "点击「+ 新建」创建一个连接。",
+    "loading": "加载中...",
+    "folderName": "文件夹名称："
+  },
+  "browser": {
+    "root": "根目录",
+    "name": "名称",
+    "size": "大小",
+    "modified": "修改时间",
+    "empty": "此文件夹为空",
+    "folder": "文件夹",
+    "file": "文件",
+    "loading": "加载中..."
+  },
+  "toolbar": {
+    "upload": "上传文件",
+    "newFolder": "新建文件夹",
+    "delete": "删除所选",
+    "refresh": "刷新",
+    "uploadSuccess": "文件上传成功",
+    "uploadFailed": "上传失败：{error}",
+    "folderCreated": "文件夹已创建",
+    "folderFailed": "创建文件夹失败：{error}",
+    "deleted": "删除成功",
+    "deleteFailed": "删除失败：{error}",
+    "deleteConfirm": "确定删除 {count} 个项目？"
+  },
+  "preview": {
+    "close": "关闭预览",
+    "edit": "编辑",
+    "preview": "预览",
+    "save": "保存 (Ctrl+S)",
+    "fileSaved": "文件已保存",
+    "saveFailed": "保存失败：{error}",
+    "notAvailable": "此文件类型暂不支持预览。",
+    "downloadHint": "你可以下载文件到本地查看。",
+    "prev": "上一页",
+    "next": "下一页"
+  },
+  "empty": {
+    "title": "未连接",
+    "subtitle": "请从侧边栏选择或新建一个 WebDAV 连接。"
+  },
+  "lang": {
+    "zh": "中文",
+    "en": "English"
+  },
+  "dialog": {
+    "confirmTitle": "确认操作",
+    "confirmOk": "确定",
+    "confirmCancel": "取消",
+    "alertTitle": "提示",
+    "deleteConfirm": "确定删除 \"{name}\" 吗？\n此操作不可撤销。",
+    "deleteConfirmMany": "确定删除这 {count} 个项目吗？\n此操作不可撤销。",
+    "renameConfirm": "确定将 \"{oldName}\" 重命名为 \"{newName}\" 吗？",
+    "copyConfirm": "确定在当前目录下创建 \"{name}\" 的副本吗？",
+    "copyConfirmMany": "确定复制 {count} 个项目到 \"{target}\" 吗？",
+    "moveConfirm": "确定将 \"{name}\" 移动到当前目录吗？",
+    "moveConfirmMany": "确定移动 {count} 个项目到 \"{target}\" 吗？",
+    "saveConfirm": "确定保存对 \"{name}\" 的修改吗？"
+  }
+}

@@ -1,0 +1,91 @@
+{
+  "app": {
+    "title": "WebDAV Client"
+  },
+  "connection": {
+    "title": "Connections",
+    "add": "+ Add",
+    "new": "New Connection",
+    "edit": "Edit Connection",
+    "name": "Name",
+    "namePlaceholder": "Name",
+    "url": "URL",
+    "urlPlaceholder": "WebDAV URL (e.g. https://dav.example.com/)",
+    "username": "Username",
+    "usernamePlaceholder": "Username",
+    "password": "Password",
+    "passwordPlaceholder": "Password",
+    "save": "Save",
+    "test": "Test",
+    "testing": "Testing...",
+    "cancel": "Cancel",
+    "testSuccess": "Connection successful!",
+    "testFailed": "Connection failed",
+    "testError": "Connection error: {error}",
+    "saveSuccess": "Connection saved",
+    "saveFailed": "Save failed: {error}",
+    "requiredFields": "URL and username are required to test",
+    "allRequired": "Please fill in all required fields",
+    "noConnections": "No connections yet.",
+    "noConnectionsHint": "Click \"+ Add\" to create one.",
+    "loading": "Loading...",
+    "folderName": "Folder name:"
+  },
+  "browser": {
+    "root": "Root",
+    "name": "Name",
+    "size": "Size",
+    "modified": "Modified",
+    "empty": "This folder is empty",
+    "folder": "Folder",
+    "file": "File",
+    "loading": "Loading..."
+  },
+  "toolbar": {
+    "upload": "Upload files",
+    "newFolder": "New folder",
+    "delete": "Delete selected",
+    "refresh": "Refresh",
+    "uploadSuccess": "Files uploaded successfully",
+    "uploadFailed": "Upload failed: {error}",
+    "folderCreated": "Folder created",
+    "folderFailed": "Failed to create folder: {error}",
+    "deleted": "Deleted successfully",
+    "deleteFailed": "Delete failed: {error}",
+    "deleteConfirm": "Delete {count} item(s)?"
+  },
+  "preview": {
+    "close": "Close preview",
+    "edit": "Edit",
+    "preview": "Preview",
+    "save": "Save (Ctrl+S)",
+    "fileSaved": "File saved",
+    "saveFailed": "Save failed: {error}",
+    "notAvailable": "Preview not available for this file type.",
+    "downloadHint": "You can download the file to view it locally.",
+    "prev": "Prev",
+    "next": "Next"
+  },
+  "empty": {
+    "title": "No Connection",
+    "subtitle": "Select or add a WebDAV connection from the sidebar to get started."
+  },
+  "lang": {
+    "zh": "中文",
+    "en": "English"
+  },
+  "dialog": {
+    "confirmTitle": "Confirm Action",
+    "confirmOk": "OK",
+    "confirmCancel": "Cancel",
+    "alertTitle": "Notice",
+    "deleteConfirm": "Delete \"{name}\"?\nThis action cannot be undone.",
+    "deleteConfirmMany": "Delete {count} items?\nThis action cannot be undone.",
+    "renameConfirm": "Rename \"{oldName}\" to \"{newName}\"?",
+    "copyConfirm": "Create a copy of \"{name}\" in current directory?",
+    "copyConfirmMany": "Copy {count} items to \"{target}\"?",
+    "moveConfirm": "Move \"{name}\" to current directory?",
+    "moveConfirmMany": "Move {count} items to \"{target}\"?",
+    "saveConfirm": "Save changes to \"{name}\"?"
+  }
+}

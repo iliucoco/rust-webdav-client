@@ -1,0 +1,32 @@
+{
+  "name": "rust-webdev-client",
+  "private": true,
+  "version": "0.1.0",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview",
+    "check": "svelte-check --tsconfig ./tsconfig.json",
+    "tauri": "tauri"
+  },
+  "dependencies": {
+    "@sveltejs/vite-plugin-svelte": "^7.0.0",
+    "@tauri-apps/api": "^2.10.1",
+    "@tauri-apps/plugin-dialog": "^2.7.0",
+    "@tauri-apps/plugin-store": "^2.4.2",
+    "docx-preview": "^0.3.7",
+    "pdfjs-dist": "^5.6.205",
+    "svelte": "^5.55.5",
+    "svelte-i18n": "^4.0.1",
+    "typescript": "^6.0.3",
+    "xlsx": "^0.18.5"
+  },
+  "devDependencies": {
+    "@tailwindcss/vite": "^4.2.4",
+    "@tauri-apps/cli": "^2.10.1",
+    "sharp": "^0.34.5",
+    "tailwindcss": "^4.2.4",
+    "vite": "^8.0.10"
+  }
+}
