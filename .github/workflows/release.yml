@@ -4,98 +4,102 @@ on:
   push:
     tags:
       - "v*"
+  workflow_dispatch:
+    inputs:
+      tag:
+        description: "Release tag (e.g. v0.1.0). Leave empty to use the pushed tag or auto-generate by run number"
+        required: false
+        default: ""
+
+permissions:
+  contents: write
 
 jobs:
   release:
-    permissions:
-      contents: write
+    name: Build ${{ matrix.target }}
     env:
       FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
+      RELEASE_TAG: ${{ github.event_name == 'workflow_dispatch' && github.event.inputs.tag != '' && github.event.inputs.tag || github.ref_name || format('v0.1.{0}', github.run_number) }}
     strategy:
       fail-fast: false
       matrix:
         include:
-          - platform: macos-latest
-            args: --target aarch64-apple-darwin
-          - platform: macos-latest
-            args: --target x86_64-apple-darwin
-          - platform: windows-latest
-            args: ""
+          - os: macos-latest
+            target: aarch64-apple-darwin
+          - os: macos-latest
+            target: x86_64-apple-darwin
+          - os: windows-latest
+            target: x86_64-pc-windows-msvc
+          # - os: ubuntu-22.04
+          #   target: x86_64-unknown-linux-gnu
 
-    runs-on: ${{ matrix.platform }}
+    runs-on: ${{ matrix.os }}
 
     steps:
-      - uses: actions/checkout@v5
+      - name: Checkout
+        uses: actions/checkout@v5
 
-      - name: setup node
+      - name: Install Linux dependencies
+        if: matrix.os == 'ubuntu-22.04'
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y \
+            libwebkit2gtk-4.1-dev \
+            libappindicator3-dev \
+            librsvg2-dev \
+            libgtk-3-dev \
+            patchelf \
+            libssl-dev
+
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          version: 9
+          run_install: false
+
+      - name: Setup Node.js
         uses: actions/setup-node@v6
         with:
           node-version: 24
+          cache: pnpm
 
-      - name: install pnpm
-        run: npm install --global pnpm@9
-
-      - name: get pnpm store directory
-        id: pnpm-cache
-        shell: bash
-        run: |
-          echo "store_path=$(pnpm store path --silent)" >> "$GITHUB_OUTPUT"
-
-      - name: cache pnpm store
-        uses: actions/cache@v4
-        with:
-          path: ${{ steps.pnpm-cache.outputs.store_path }}
-          key: ${{ runner.os }}-pnpm-store-${{ hashFiles('pnpm-lock.yaml') }}
-          restore-keys: |
-            ${{ runner.os }}-pnpm-store-
-
-      - name: install Rust stable
+      - name: Setup Rust
         uses: dtolnay/rust-toolchain@stable
         with:
-          targets: ${{ matrix.platform == 'macos-latest' && 'aarch64-apple-darwin,x86_64-apple-darwin' || '' }}
+          targets: ${{ matrix.target }}
 
-      - name: cache cargo
-        uses: actions/cache@v4
+      - name: Rust cache
+        uses: swatinem/rust-cache@v2
         with:
-          path: |
-            ~/.cargo/registry
-            ~/.cargo/git
-            src-tauri/target
-          key: ${{ runner.os }}-cargo-${{ hashFiles('src-tauri/Cargo.lock') }}
-          restore-keys: |
-            ${{ runner.os }}-cargo-
+          workspaces: ./src-tauri -> target
 
-      - name: install frontend dependencies
-        run: pnpm install
+      - name: Install frontend dependencies
+        run: pnpm install --frozen-lockfile
 
-      - name: debug metadata before build
-        shell: bash
-        run: |
-          echo "==== package.json ===="
-          cat package.json
-          echo
-          echo "==== src-tauri/tauri.conf.json ===="
-          cat src-tauri/tauri.conf.json
-
-      - name: build and release
-        uses: tauri-apps/tauri-action@v0
+      - name: Build and create GitHub Release
+        uses: tauri-apps/tauri-action@action-v0.6.2
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
-          tagName: ${{ github.ref_name }}
-          releaseName: "WebDAV-Client ${{ github.ref_name }}"
+          tagName: ${{ env.RELEASE_TAG }}
+          releaseName: "WebDAV-Client ${{ env.RELEASE_TAG }}"
+          releaseBody: |
+            ## WebDAV-Client Release
+
+            ### Platforms
+            - macOS Apple Silicon (aarch64)
+            - macOS Intel (x86_64)
+            - Windows x64
+
+            ### macOS first-run fix (unsigned app)
+            If macOS shows **damaged** or blocks opening, run:
+
+            ```bash
+            xattr -c /Applications/WebDAV-Client.app
+            ```
+
           releaseDraft: true
           prerelease: false
           tauriScript: pnpm tauri
-          args: ${{ matrix.args }}
+          args: --target ${{ matrix.target }}
           assetNamePattern: "WebDAV-Client_v[version]-[arch][setup][ext]"
-
-      - name: debug bundle files after build
-        if: always()
-        shell: bash
-        run: |
-          echo "==== bundle files ===="
-          find src-tauri/target -type f | sort | grep -E 'bundle|\.app|\.dmg|\.sig|\.tar\.gz|setup\.exe|msi' || true
-          echo
-          echo "==== bundle dirs ===="
-          find src-tauri/target -type d | sort | grep bundle || true
