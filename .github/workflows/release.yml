@@ -9,6 +9,8 @@ jobs:
   release:
     permissions:
       contents: write
+    env:
+      FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
     strategy:
       fail-fast: false
       matrix:
@@ -22,18 +24,16 @@ jobs:
 
     runs-on: ${{ matrix.platform }}
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
 
       - name: setup node
-        uses: actions/setup-node@v4
+        uses: actions/setup-node@v6
         with:
-          node-version: 20
+          node-version: 24
           cache: pnpm
 
-      - name: enable corepack
-        run: |
-          corepack enable
-          corepack prepare pnpm@9 --activate
+      - name: install pnpm
+        run: npm install --global pnpm@9
 
       - name: install Rust stable
         uses: dtolnay/rust-toolchain@stable
@@ -65,4 +65,5 @@ jobs:
             - **Windows**: `WebDAV-Client_v__VERSION__-x64-setup.exe`
           releaseDraft: true
           prerelease: false
+          tauriScript: pnpm tauri
           args: ${{ matrix.args }}
