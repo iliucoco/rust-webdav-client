@@ -34,20 +34,23 @@ Two-layer architecture communicating via Tauri IPC (`invoke`):
 
 **Rust backend** (`src-tauri/`): All WebDAV protocol interaction via `reqwest_dav`. 19 Tauri commands across 7 modules in `src-tauri/src/commands/`. State lives in `AppState` (`src-tauri/src/webdav/mod.rs`) — a `Mutex<HashMap<String, WebDavClient>>` for connections and `Mutex<Option<String>>` for the active connection ID. Connection profiles are persisted via `tauri-plugin-store` into `connections.json`.
 
-**Svelte 5 frontend** (`src/`): Single-page app using Svelte 5 runes (`$state`) for reactivity. `src/lib/api.ts` wraps all `invoke()` calls. Four store modules in `src/lib/stores/` (`browser`, `connections`, `preview`, `toast`) encapsulate domain state. Components organized by feature in `src/lib/components/` (layout, connection, browser, preview).
+**Svelte 5 frontend** (`src/`): Single-page app using Svelte 5 runes (`$state`) for reactivity. `src/lib/api.ts` wraps all `invoke()` calls. Six store modules in `src/lib/stores/` (`browser`, `connections`, `preview`, `toast`, `theme`, `dialog`) encapsulate domain state. Components organized by feature in `src/lib/components/` (layout, connection, browser, preview, common).
 
 ### Data flow
+
 Component → store function → `api.ts` `invoke()` → Rust command → `AppState.get_client()` → WebDAV operation → result returned via IPC → store updates reactive state → Svelte re-renders
 
 ### Key patterns
+
 - `AppState::get_client()` clones the `WebDavClient` before async work to avoid holding the Mutex lock across `.await`
 - `FileMetadata` uses `Serialize` only (Rust→frontend), `ConnectionProfile` derives both `Serialize`/`Deserialize` (bidirectional)
-- Dark mode is CSS-only via `@media (prefers-color-scheme: dark)` with custom properties in `app.css`
+- Theme is JS-driven (`theme.svelte.ts`): applies `light`/`dark`/`auto` class on `<html>`, persists choice in localStorage, default is `dark`; CSS variables in `app.css` respond to these classes
 - i18n uses `svelte-i18n` with locale files in `src/lib/i18n/`
 - **Timeouts**: All WebDAV operations have `tokio::time::timeout` wrappers (10-300s depending on operation type)
 - **Path normalization**: `WebDavClient::normalize_path()` ensures all paths start with `/` (handles root edge case)
 - **Request cancellation**: Preview operations use `AbortController` signal passed to `invoke()` for canceling in-flight downloads
 - **Preview size limits**: 50MB limit for binary previews; oversized files show friendly error instead of hanging
+- **Text edit size limit**: 5MB max for text file editing; larger files return an error
 
 ## Key Dependencies
 
@@ -59,3 +62,12 @@ Frontend: `svelte ^5`, `@tauri-apps/api ^2`, `pdfjs-dist`, `docx-preview`, `xlsx
 
 - Node.js >= 18, Rust >= 1.77, pnpm
 - Tauri 2 CLI: `pnpm add -D @tauri-apps/cli`
+
+## Release
+
+GitHub Actions workflow (`.github/workflows/release.yml`) builds on `v*` tag push. Targets: macOS ARM (dmg), macOS Intel (dmg), Windows x64 (exe). Creates a draft GitHub Release for manual publish.
+
+```bash
+git tag v0.1.0
+git push origin v0.1.0
+```
