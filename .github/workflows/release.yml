@@ -34,10 +34,35 @@ jobs:
       - name: install pnpm
         run: npm install --global pnpm@9
 
+      - name: get pnpm store directory
+        id: pnpm-cache
+        shell: bash
+        run: |
+          echo "store_path=$(pnpm store path --silent)" >> "$GITHUB_OUTPUT"
+
+      - name: cache pnpm store
+        uses: actions/cache@v4
+        with:
+          path: ${{ steps.pnpm-cache.outputs.store_path }}
+          key: ${{ runner.os }}-pnpm-store-${{ hashFiles('pnpm-lock.yaml') }}
+          restore-keys: |
+            ${{ runner.os }}-pnpm-store-
+
       - name: install Rust stable
         uses: dtolnay/rust-toolchain@stable
         with:
           targets: ${{ matrix.platform == 'macos-latest' && 'aarch64-apple-darwin,x86_64-apple-darwin' || '' }}
+
+      - name: cache cargo
+        uses: actions/cache@v4
+        with:
+          path: |
+            ~/.cargo/registry
+            ~/.cargo/git
+            src-tauri/target
+          key: ${{ runner.os }}-cargo-${{ hashFiles('src-tauri/Cargo.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-cargo-
 
       - name: install dependencies (ubuntu only)
         if: matrix.platform == 'ubuntu-22.04'
@@ -48,20 +73,21 @@ jobs:
       - name: install frontend dependencies
         run: pnpm install
 
-      - uses: tauri-apps/tauri-action@v0
+      - uses: tauri-apps/tauri-action@action-v0.6.2
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           tagName: v__VERSION__
-          releaseName: "WebDAV Client v__VERSION__"
+          releaseName: "WebDAV-Client v__VERSION__"
           releaseBody: |
-            ## WebDAV Client v__VERSION__
+            ## WebDAV-Client v__VERSION__
 
             ### 下载
 
             - **macOS (Apple Silicon)**: `WebDAV-Client_v__VERSION__-aarch64.dmg`
             - **macOS (Intel)**: `WebDAV-Client_v__VERSION__-x64.dmg`
             - **Windows**: `WebDAV-Client_v__VERSION__-x64-setup.exe`
+          assetNamePattern: "WebDAV-Client_v[version]-[arch][setup][ext]"
           releaseDraft: true
           prerelease: false
           tauriScript: pnpm tauri
