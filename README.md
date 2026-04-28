@@ -9,9 +9,11 @@
 - **文件操作** — 上传、下载、新建文件夹、删除（二次确认）、重命名、复制、移动，支持批量操作和根目录操作
 - **右键菜单** — 支持文件右键快捷操作（重命名/复制/移动/下载/删除）
 - **文件预览**
+
   - 文本/代码文件
   - 图片（JPG/PNG/GIF/WebP/SVG），支持大文件预览大小限制
   - PDF（翻页浏览）
+
   - 音频/视频（HTML5 播放器）
   - Word 文档（DOCX 渲染）
   - Excel 表格（XLSX 渲染为 HTML 表格）
@@ -100,6 +102,7 @@ git push origin v0.1.0
 ```
 
 构建目标：
+
 - macOS Apple Silicon (`.dmg`)
 - macOS Intel (`.dmg`)
 - Windows x64 (`.exe` 安装包)
