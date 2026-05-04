@@ -1,6 +1,13 @@
 {
   "app": {
-    "title": "WebDAV Client"
+    "title": "WebDAV Client",
+    "quitConfirm": "Are you sure you want to quit?",
+    "quit": "Quit",
+    "quitCancel": "Cancel"
+  },
+  "sidebar": {
+    "collapse": "Collapse sidebar",
+    "expand": "Expand sidebar"
   },
   "connection": {
     "title": "Connections",
@@ -29,7 +36,14 @@
     "noConnections": "No connections yet.",
     "noConnectionsHint": "Click \"+ Add\" to create one.",
     "loading": "Loading...",
-    "folderName": "Folder name:"
+    "folderName": "Folder name:",
+    "ctxConnect": "Connect",
+    "ctxDisconnect": "Disconnect",
+    "ctxEdit": "Edit",
+    "ctxTest": "Test Connection",
+    "ctxNew": "New Connection",
+    "ctxDelete": "Delete",
+    "deleteConfirm": "Delete connection \"{name}\"?"
   },
   "browser": {
     "root": "Root",
@@ -87,5 +101,20 @@
     "moveConfirm": "Move \"{name}\" to current directory?",
     "moveConfirmMany": "Move {count} items to \"{target}\"?",
     "saveConfirm": "Save changes to \"{name}\"?"
+  },
+  "update": {
+    "available": "New version {version} available",
+    "upToDate": "Already up to date",
+    "checkFailed": "Failed to check for updates",
+    "download": "Download"
+  },
+  "settings": {
+    "title": "Settings",
+    "language": "Language",
+    "theme": "Theme",
+    "autoUpdate": "Auto Check Updates",
+    "checkNow": "Check Now",
+    "about": "About",
+    "license": "License"
   }
 }

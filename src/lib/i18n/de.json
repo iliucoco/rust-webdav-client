@@ -1,0 +1,121 @@
+{
+  "app": {
+    "title": "WebDAV-Client",
+    "quitConfirm": "Möchten Sie die Anwendung beenden?",
+    "quit": "Beenden",
+    "quitCancel": "Abbrechen"
+  },
+  "sidebar": {
+    "collapse": "Seitenleiste einklappen",
+    "expand": "Seitenleiste ausklappen"
+  },
+  "connection": {
+    "title": "Verbindungen",
+    "add": "+ Neu",
+    "new": "Neue Verbindung",
+    "edit": "Verbindung bearbeiten",
+    "name": "Name",
+    "namePlaceholder": "Name",
+    "url": "URL",
+    "urlPlaceholder": "WebDAV-URL (z.B. https://dav.example.com/)",
+    "username": "Benutzername",
+    "usernamePlaceholder": "Benutzername",
+    "password": "Passwort",
+    "passwordPlaceholder": "Passwort",
+    "save": "Speichern",
+    "test": "Testen",
+    "testing": "Teste...",
+    "cancel": "Abbrechen",
+    "delete": "Löschen",
+    "testSuccess": "Verbindung erfolgreich!",
+    "testFailed": "Verbindung fehlgeschlagen",
+    "testError": "Verbindungsfehler: {error}",
+    "saveSuccess": "Verbindung gespeichert",
+    "saveFailed": "Speichern fehlgeschlagen: {error}",
+    "requiredFields": "Bitte URL und Benutzernamen eingeben before testing",
+    "allRequired": "Bitte alle Pflichtfelder ausfüllen",
+    "noConnections": "Keine Verbindungen vorhanden.",
+    "noConnectionsHint": "Klicken Sie auf \"+ Neu\", um eine Verbindung zu erstellen.",
+    "loading": "Laden...",
+    "folderName": "Ordnername:",
+    "ctxConnect": "Verbinden",
+    "ctxDisconnect": "Trennen",
+    "ctxEdit": "Bearbeiten",
+    "ctxTest": "Verbindung testen",
+    "ctxNew": "Neue Verbindung",
+    "ctxDelete": "Löschen",
+    "deleteConfirm": "Verbindung \"{name}\" löschen?"
+  },
+  "browser": {
+    "root": "Stammverzeichnis",
+    "name": "Name",
+    "size": "Größe",
+    "modified": "Geändert",
+    "empty": "Dieser Ordner ist leer",
+    "folder": "Ordner",
+    "file": "Datei",
+    "loading": "Laden..."
+  },
+  "toolbar": {
+    "upload": "Dateien hochladen",
+    "newFolder": "Neuer Ordner",
+    "delete": "Auswahl löschen",
+    "refresh": "Aktualisieren",
+    "uploadSuccess": "Dateien erfolgreich hochgeladen",
+    "uploadFailed": "Upload fehlgeschlagen: {error}",
+    "folderCreated": "Ordner erstellt",
+    "folderFailed": "Ordnererstellung fehlgeschlagen: {error}",
+    "deleted": "Erfolgreich gelöscht",
+    "deleteFailed": "Löschen fehlgeschlagen: {error}",
+    "deleteConfirm": "{count} Element(e) löschen?"
+  },
+  "preview": {
+    "close": "Vorschau schließen",
+    "edit": "Bearbeiten",
+    "preview": "Vorschau",
+    "save": "Speichern (Strg+S)",
+    "fileSaved": "Datei gespeichert",
+    "saveFailed": "Speichern fehlgeschlagen: {error}",
+    "notAvailable": "Vorschau für diesen Dateityp wird nicht unterstützt.",
+    "downloadHint": "Sie können die Datei herunterladen, um sie lokal anzuzeigen.",
+    "prev": "Zurück",
+    "next": "Weiter"
+  },
+  "empty": {
+    "title": "Keine Verbindung",
+    "subtitle": "Wählen oder erstellen Sie eine WebDAV-Verbindung in der Seitenleiste."
+  },
+  "lang": {
+    "zh": "中文",
+    "en": "English"
+  },
+  "dialog": {
+    "confirmTitle": "Bestätigung",
+    "confirmOk": "OK",
+    "confirmCancel": "Abbrechen",
+    "alertTitle": "Hinweis",
+    "deleteConfirm": "\"{name}\" löschen?\nDiese Aktion kann nicht rückgängig gemacht werden.",
+    "deleteConfirmMany": "{count} Element(e) löschen?\nDiese Aktion kann nicht rückgängig gemacht werden.",
+    "renameConfirm": "\"{oldName}\" in \"{newName}\" umbenennen?",
+    "copyConfirm": "Eine Kopie von \"{name}\" im aktuellen Verzeichnis erstellen?",
+    "copyConfirmMany": "{count} Element(e) nach \"{target}\" kopieren?",
+    "moveConfirm": "\"{name}\" in das aktuelle Verzeichnis verschieben?",
+    "moveConfirmMany": "{count} Element(e) nach \"{target}\" verschieben?",
+    "saveConfirm": "Änderungen an \"{name}\" speichern?"
+  },
+  "update": {
+    "available": "Neue Version {version} verfügbar",
+    "upToDate": "Bereits auf dem neuesten Stand",
+    "checkFailed": "Update-Prüfung fehlgeschlagen",
+    "download": "Herunterladen"
+  },
+  "settings": {
+    "title": "Einstellungen",
+    "language": "Sprache",
+    "theme": "Design",
+    "autoUpdate": "Automatische Update-Prüfung",
+    "checkNow": "Jetzt prüfen",
+    "about": "Über",
+    "license": "Lizenz"
+  }
+}

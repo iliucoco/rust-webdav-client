@@ -24,6 +24,7 @@
   import { api } from "../../api";
   import FileItem from "./FileItem.svelte";
   import ContextMenu from "../common/ContextMenu.svelte";
+  import { Pencil, Copy, ArrowRight, Download, Trash2 } from "lucide-svelte";
 
   function tr(key: string, options?: { values?: Record<string, string | number> }): string {
     return get(t)(key, options)?.toString() || "";
@@ -31,6 +32,9 @@
 
   /** 右键菜单状态 */
   let contextMenu = $state<{ x: number; y: number; path: string } | null>(null);
+
+  /** 是否为根目录 - 根目录禁止选择和右键操作 */
+  let isRoot = $derived(getCurrentPath() === "/");
 
   /** 关闭右键菜单 */
   function closeContextMenu() {
@@ -178,21 +182,23 @@
   <!-- 文件列表显示 -->
   {:else}
     <!-- 表头 - 固定在顶部 -->
-    <div class="sticky top-0 grid grid-cols-[auto_1fr_100px_160px] gap-4 border-b border-[var(--color-border)] bg-[var(--color-bg-secondary)] px-4 py-2 text-xs font-medium text-[var(--color-text-secondary)] items-center">
+    <div class="sticky top-0 {isRoot ? 'grid-cols-[1fr_100px_160px]' : 'grid-cols-[auto_1fr_100px_160px]'} grid gap-4 border-b border-[var(--color-border)] bg-[var(--color-bg-secondary)] px-4 py-2 text-xs font-medium text-[var(--color-text-secondary)] items-center">
       <!-- 全选框 -->
-      <div class="shrink-0">
-        <input
-          type="checkbox"
-          checked={getSelectedPaths().size === getItems().length && getItems().length > 0}
-          onchange={() => {
-            if (getSelectedPaths().size === getItems().length) {
-              clearSelection();
-            } else {
-              selectAll();
-            }
-          }}
-        />
-      </div>
+      {#if !isRoot}
+        <div class="shrink-0">
+          <input
+            type="checkbox"
+            checked={getSelectedPaths().size === getItems().length && getItems().length > 0}
+            onchange={() => {
+              if (getSelectedPaths().size === getItems().length) {
+                clearSelection();
+              } else {
+                selectAll();
+              }
+            }}
+          />
+        </div>
+      {/if}
       <span>{$_("browser.name")}</span>
       <span class="text-right">{$_("browser.size")}</span>
       <span>{$_("browser.modified")}</span>
@@ -206,6 +212,7 @@
         ondblclick={() => handleDoubleClick(item)}
         oncheckbox={() => toggleSelect(item.path, true)}
         oncontextmenu={(e) => handleContextMenu(e, item.path)}
+        readonly={isRoot}
       />
     {/each}
   {/if}
@@ -217,11 +224,11 @@
     x={contextMenu.x}
     y={contextMenu.y}
     items={[
-      { label: "重命名", icon: "✏️", action: handleContextRename },
-      { label: "复制", icon: "📋", action: handleContextCopy },
-      { label: "移动", icon: "➡️", action: handleContextMove },
-      { label: "下载", icon: "⬇️", action: handleContextDownload },
-      { label: "删除", icon: "🗑️", action: handleContextDelete },
+      { label: "重命名", icon: Pencil, action: handleContextRename },
+      { label: "复制", icon: Copy, action: handleContextCopy },
+      { label: "移动", icon: ArrowRight, action: handleContextMove },
+      { label: "下载", icon: Download, action: handleContextDownload },
+      { label: "删除", icon: Trash2, action: handleContextDelete },
     ]}
     onClose={closeContextMenu}
   />

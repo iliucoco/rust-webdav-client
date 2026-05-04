@@ -1,0 +1,121 @@
+{
+  "app": {
+    "title": "WebDAV Клиент",
+    "quitConfirm": "Вы уверены, что хотите выйти?",
+    "quit": "Выйти",
+    "quitCancel": "Отмена"
+  },
+  "sidebar": {
+    "collapse": "Свернуть боковую панель",
+    "expand": "Развернуть боковую панель"
+  },
+  "connection": {
+    "title": "Подключения",
+    "add": "+ Создать",
+    "new": "Новое подключение",
+    "edit": "Редактировать подключение",
+    "name": "Имя",
+    "namePlaceholder": "Имя",
+    "url": "Адрес",
+    "urlPlaceholder": "WebDAV адрес (напр. https://dav.example.com/)",
+    "username": "Имя пользователя",
+    "usernamePlaceholder": "Имя пользователя",
+    "password": "Пароль",
+    "passwordPlaceholder": "Пароль",
+    "save": "Сохранить",
+    "test": "Тест",
+    "testing": "Тестирование...",
+    "cancel": "Отмена",
+    "delete": "Удалить",
+    "testSuccess": "Подключение успешно！",
+    "testFailed": "Подключение не удалось",
+    "testError": "Ошибка подключения：{error}",
+    "saveSuccess": "Подключение сохранено",
+    "saveFailed": "Ошибка сохранения：{error}",
+    "requiredFields": "Введите адрес и имя пользователя перед тестированием",
+    "allRequired": "Заполните все обязательные поля",
+    "noConnections": "Нет подключений.",
+    "noConnectionsHint": "Нажмите「+ Создать」для создания подключения.",
+    "loading": "Загрузка...",
+    "folderName": "Имя папки：",
+    "ctxConnect": "Подключиться",
+    "ctxDisconnect": "Отключиться",
+    "ctxEdit": "Редактировать",
+    "ctxTest": "Тест подключения",
+    "ctxNew": "Новое подключение",
+    "ctxDelete": "Удалить",
+    "deleteConfirm": "Удалить подключение「{name}」？"
+  },
+  "browser": {
+    "root": "Корень",
+    "name": "Имя",
+    "size": "Размер",
+    "modified": "Изменено",
+    "empty": "Эта папка пуста",
+    "folder": "Папка",
+    "file": "Файл",
+    "loading": "Загрузка..."
+  },
+  "toolbar": {
+    "upload": "Загрузить файлы",
+    "newFolder": "Новая папка",
+    "delete": "Удалить выбранное",
+    "refresh": "Обновить",
+    "uploadSuccess": "Файлы загружены",
+    "uploadFailed": "Ошибка загрузки：{error}",
+    "folderCreated": "Папка создана",
+    "folderFailed": "Ошибка создания папки：{error}",
+    "deleted": "Удалено",
+    "deleteFailed": "Ошибка удаления：{error}",
+    "deleteConfirm": "Удалить {count} элемент(ов)？"
+  },
+  "preview": {
+    "close": "Закрыть предпросмотр",
+    "edit": "Редактировать",
+    "preview": "Предпросмотр",
+    "save": "Сохранить (Ctrl+S)",
+    "fileSaved": "Файл сохранён",
+    "saveFailed": "Ошибка сохранения：{error}",
+    "notAvailable": "Предпросмотр для этого типа файлов не поддерживается.",
+    "downloadHint": "Вы можете скачать файл для локального просмотра.",
+    "prev": "Назад",
+    "next": "Далее"
+  },
+  "empty": {
+    "title": "Нет подключения",
+    "subtitle": "Выберите или создайте WebDAV подключение в боковой панели."
+  },
+  "lang": {
+    "zh": "中文",
+    "en": "English"
+  },
+  "dialog": {
+    "confirmTitle": "Подтверждение",
+    "confirmOk": "OK",
+    "confirmCancel": "Отмена",
+    "alertTitle": "Уведомление",
+    "deleteConfirm": "Удалить「{name}」？\nЭто действие нельзя отменить.",
+    "deleteConfirmMany": "Удалить {count} элемент(ов)？\nЭто действие нельзя отменить.",
+    "renameConfirm": "Переименовать「{oldName}」в「{newName}」？",
+    "copyConfirm": "Создать копию「{name}」в текущей папке？",
+    "copyConfirmMany": "Копировать {count} элемент(ов) в「{target}」？",
+    "moveConfirm": "Переместить「{name}」в текущую папку？",
+    "moveConfirmMany": "Переместить {count} элемент(ов) в「{target}」？",
+    "saveConfirm": "Сохранить изменения в「{name}」？"
+  },
+  "update": {
+    "available": "Доступна новая версия {version}",
+    "upToDate": "Установлена последняя версия",
+    "checkFailed": "Ошибка проверки обновлений",
+    "download": "Скачать"
+  },
+  "settings": {
+    "title": "Настройки",
+    "language": "Язык",
+    "theme": "Тема",
+    "autoUpdate": "Автопроверка обновлений",
+    "checkNow": "Проверить сейчас",
+    "about": "О программе",
+    "license": "Лицензия"
+  }
+}
