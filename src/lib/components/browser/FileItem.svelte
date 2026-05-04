@@ -3,13 +3,14 @@
   import { getFileCategory, formatFileSize, formatDate, getFileIcon } from "../../utils/file-types";
   import { Folder, FileText } from "lucide-svelte";
 
-  let { item, selected = false, onselect, ondblclick, oncheckbox, oncontextmenu } = $props<{
+  let { item, selected = false, onselect, ondblclick, oncheckbox, oncontextmenu, readonly = false } = $props<{
     item: FileMetadata;
     selected: boolean;
     onselect: () => void;
     ondblclick: () => void;
     oncheckbox: () => void;
     oncontextmenu: (e: MouseEvent) => void;
+    readonly?: boolean;
   }>();
 
   const category = getFileCategory(item.name, item.content_type);
@@ -22,20 +23,22 @@
 </script>
 
 <div
-  class="grid grid-cols-[auto_1fr_100px_160px] gap-4 border-b border-[var(--color-border)] px-4 py-2 text-left text-sm transition-colors items-center {selected
+  class="grid {readonly ? 'grid-cols-[1fr_100px_160px]' : 'grid-cols-[auto_1fr_100px_160px]'} gap-4 border-b border-[var(--color-border)] px-4 py-2 text-left text-sm transition-colors items-center {selected
     ? 'bg-[var(--color-accent)]/10 text-[var(--color-accent)]'
     : 'text-[var(--color-text-primary)] hover:bg-[var(--color-bg-secondary)]'}"
   role="row"
-  oncontextmenu={oncontextmenu}
+  oncontextmenu={readonly ? undefined : oncontextmenu}
 >
   <!-- 选择框 -->
-  <div class="shrink-0">
-    <input
-      type="checkbox"
-      bind:checked={selected}
-      onclick={handleCheckboxClick}
-    />
-  </div>
+  {#if !readonly}
+    <div class="shrink-0">
+      <input
+        type="checkbox"
+        bind:checked={selected}
+        onclick={handleCheckboxClick}
+      />
+    </div>
+  {/if}
   <!-- 文件图标和名称 -->
   <button class="flex items-center gap-2 truncate w-full text-left" onclick={onselect} ondblclick={ondblclick}>
     {#if item.is_dir}

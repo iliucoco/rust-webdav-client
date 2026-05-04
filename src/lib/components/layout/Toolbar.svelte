@@ -246,7 +246,7 @@
         <FolderPlus class="h-4 w-4" />
       </button>
     {/if}
-    {#if getSelectedPaths().size > 0 && !actionMode}
+    {#if getSelectedPaths().size > 0 && !actionMode && getCurrentPath() !== "/"}
       <button
         class="rounded-md p-2 text-[var(--color-text-secondary)] hover:bg-[var(--color-accent)]/10 hover:text-[var(--color-accent)]"
         onclick={startRename}
