@@ -1,10 +1,10 @@
 <script lang="ts">
-  import { _ } from "svelte-i18n";
+  import { _, locale } from "svelte-i18n";
   import { open } from "@tauri-apps/plugin-shell";
   import { setLocale } from "../../i18n";
   import { getTheme, setTheme, type Theme } from "../../stores/theme.svelte";
   import { getAutoCheck, setAutoCheck, checkForUpdateNow } from "../../stores/update.svelte";
-  import { X, ExternalLink } from "lucide-svelte";
+  import { X, ExternalLink, Sun, Moon, Monitor } from "lucide-svelte";
   import { getVersion } from "../../stores/version";
 
   let { onClose } = $props<{ onClose: () => void }>();
@@ -21,10 +21,6 @@
     { code: "de", label: "Deutsch" },
     { code: "ru", label: "Русский" },
   ];
-
-  let locale = $state(
-    typeof localStorage !== "undefined" ? localStorage.getItem("locale") || "en" : "en"
-  );
   let theme = $state<Theme>(getTheme());
   let autoCheck = $state(getAutoCheck());
   let showLicense = $state(false);
@@ -32,7 +28,6 @@
   let licenseLoading = $state(false);
 
   function handleLocale(next: string) {
-    locale = next;
     setLocale(next);
   }
 
@@ -65,6 +60,8 @@
   }
 </script>
 
+<!-- svelte-ignore a11y_click_events_have_key_events -->
+<!-- svelte-ignore a11y_no_static_element_interactions -->
 <div class="fixed inset-0 z-50 flex items-center justify-center bg-black/50" onclick={onClose}>
   <div
     class="w-full max-w-sm rounded-lg border border-[var(--color-border)] bg-[var(--color-bg-primary)] shadow-xl"
@@ -86,8 +83,8 @@
         <span class="text-sm text-[var(--color-text-primary)]">{$_("settings.language")}</span>
         <select
           class="rounded-md border border-[var(--color-border)] bg-[var(--color-bg-primary)] px-2 py-1 text-xs text-[var(--color-text-primary)] outline-none focus:border-[var(--color-accent)]"
-          bind:value={locale}
-          onchange={() => handleLocale(locale)}
+          value={$locale}
+          onchange={(e) => handleLocale((e.target as HTMLSelectElement).value)}
         >
           {#each locales as loc}
             <option value={loc.code}>{loc.label}</option>
@@ -104,19 +101,19 @@
               ? 'bg-[var(--color-accent)] text-white'
               : 'bg-[var(--color-bg-primary)] text-[var(--color-text-secondary)] hover:bg-[var(--color-accent)]/10'}"
             onclick={() => handleTheme("light")}
-          >☀️</button>
+          ><Sun class="h-3.5 w-3.5" /></button>
           <button
             class="px-3 py-1 text-xs {theme === 'dark'
               ? 'bg-[var(--color-accent)] text-white'
               : 'bg-[var(--color-bg-primary)] text-[var(--color-text-secondary)] hover:bg-[var(--color-accent)]/10'}"
             onclick={() => handleTheme("dark")}
-          >🌙</button>
+          ><Moon class="h-3.5 w-3.5" /></button>
           <button
             class="px-3 py-1 text-xs {theme === 'auto'
               ? 'bg-[var(--color-accent)] text-white'
               : 'bg-[var(--color-bg-primary)] text-[var(--color-text-secondary)] hover:bg-[var(--color-accent)]/10'}"
             onclick={() => handleTheme("auto")}
-          >🖥️</button>
+          ><Monitor class="h-3.5 w-3.5" /></button>
         </div>
       </div>
 
@@ -130,6 +127,7 @@
           >
             {$_("settings.checkNow")}
           </button>
+          <!-- svelte-ignore a11y_consider_explicit_label -->
           <button
             class="relative h-5 w-9 rounded-full transition-colors {autoCheck
               ? 'bg-[var(--color-accent)]'

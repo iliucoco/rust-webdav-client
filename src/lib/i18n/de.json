@@ -34,7 +34,6 @@
     "saveFailed": "Speichern fehlgeschlagen: {error}",
     "requiredFields": "Bitte URL und Benutzernamen eingeben before testing",
     "allRequired": "Bitte alle Pflichtfelder ausfüllen",
-    "noConnections": "Keine Verbindungen vorhanden.",
     "noConnectionsHint": "Klicken Sie auf \"+ Neu\", um eine Verbindung zu erstellen.",
     "loading": "Laden...",
     "folderName": "Ordnername:",

@@ -33,7 +33,6 @@
     "saveFailed": "Save failed: {error}",
     "requiredFields": "URL and username are required to test",
     "allRequired": "Please fill in all required fields",
-    "noConnections": "No connections yet.",
     "noConnectionsHint": "Click \"+ Add\" to create one.",
     "loading": "Loading...",
     "folderName": "Folder name:",

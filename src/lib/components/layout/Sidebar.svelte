@@ -12,7 +12,7 @@
   } from "../../stores/connections.svelte";
   import { showConfirm } from "../../stores/dialog.svelte";
   import { showToast } from "../../stores/toast.svelte";
-  import { ChevronLeft, Settings, Server, Plug, Unplug, Pencil, Zap, Trash2, Plus } from "lucide-svelte";
+  import { PanelLeftClose, PanelLeftOpen, Settings, Server, Plug, Unplug, Pencil, Zap, Trash2, Plus } from "lucide-svelte";
   import ConnectionForm from "../connection/ConnectionForm.svelte";
   import ContextMenu from "../common/ContextMenu.svelte";
   import SettingsModal from "../common/SettingsModal.svelte";
@@ -100,21 +100,28 @@
 </script>
 
 <aside class="flex h-full flex-col border-r border-[var(--color-border)] bg-[var(--color-bg-sidebar)]">
-  <div class="flex items-center justify-between border-b border-[var(--color-border)] px-4 py-3">
+  <div
+    class="flex items-center border-b border-[var(--color-border)] px-3 py-3 {collapsed ? 'justify-center' : 'justify-between'}"
+  >
     {#if !collapsed}
       <h2 class="flex-1 text-center text-sm font-semibold text-[var(--color-text-primary)]">{$_("connection.title")}</h2>
     {/if}
     <button
-      class="shrink-0 rounded-md p-1 text-[var(--color-text-secondary)] hover:bg-[var(--color-accent)]/10 hover:text-[var(--color-accent)]"
+      class="shrink-0 rounded-md p-1.5 text-[var(--color-text-secondary)] hover:bg-[var(--color-accent)]/10 hover:text-[var(--color-accent)] transition-colors"
       onclick={onToggle}
       title={collapsed ? $_("sidebar.expand") : $_("sidebar.collapse")}
     >
-      <ChevronLeft class="h-4 w-4 transition-transform {collapsed ? 'rotate-180' : ''}" />
+      {#if collapsed}
+        <PanelLeftOpen class="h-4 w-4" />
+      {:else}
+        <PanelLeftClose class="h-4 w-4" />
+      {/if}
     </button>
   </div>
 
   {#if collapsed}
     <!-- collapsed: icons only -->
+    <!-- svelte-ignore a11y_no_static_element_interactions -->
     <div class="flex flex-1 flex-col items-center gap-1 overflow-y-auto py-2" oncontextmenu={handleBlankContext}>
       {#each getProfiles() as profile (profile.id)}
         <button
@@ -143,12 +150,12 @@
     </div>
   {:else}
     <!-- expanded: full sidebar -->
+    <!-- svelte-ignore a11y_no_static_element_interactions -->
     <div class="flex-1 overflow-y-auto p-2" oncontextmenu={handleBlankContext}>
       {#if getLoading()}
         <div class="px-2 py-4 text-center text-sm text-[var(--color-text-secondary)]">{$_("connection.loading")}</div>
       {:else if getProfiles().length === 0}
         <div class="flex flex-col items-center gap-3 px-2 py-6">
-          <span class="text-sm text-[var(--color-text-secondary)]">{$_("connection.noConnections")}</span>
           <button
             class="rounded-md bg-[var(--color-accent)] px-3 py-1.5 text-xs text-white hover:bg-[var(--color-accent-hover)]"
             onclick={() => { editingId = null; showForm = true; }}
