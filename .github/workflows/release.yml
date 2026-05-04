@@ -128,8 +128,9 @@ jobs:
           if [ -z "$DMG_PATH" ]; then echo "No DMG found"; exit 1; fi
           echo "DMG: $DMG_PATH"
 
-          # Convert to read-write
-          hdiutil convert "$DMG_PATH" -format UDRW -o /tmp/rw.dmg -quiet
+          # Convert to read-write and resize to fit additional files
+          hdiutil convert "$DMG_PATH" -format UDRW -o /tmp/rw.dmg
+          hdiutil resize -size 200m /tmp/rw.dmg
 
           # Mount
           MOUNT=$(hdiutil attach /tmp/rw.dmg -readwrite -nobrowse | tail -1)
@@ -139,20 +140,20 @@ jobs:
           # Copy install instructions into DMG
           cp INSTALL-macOS.txt "$MOUNT_POINT/"
 
-          # Sync and detach (retry to handle "resource busy")
+          # Detach (retry to handle "resource busy")
           sync
           for i in 1 2 3 4 5; do
-            if hdiutil detach "$MOUNT_POINT" -quiet; then
+            if hdiutil detach "$MOUNT_POINT"; then
               break
             elif [ "$i" -eq 5 ]; then
-              hdiutil detach "$MOUNT_POINT" -force -quiet
+              hdiutil detach "$MOUNT_POINT" -force
             else
-              sleep 5
+              sleep 3
             fi
           done
 
           # Convert back to compressed, overwrite original
-          hdiutil convert /tmp/rw.dmg -format UDZO -o "$DMG_PATH" -quiet
+          hdiutil convert /tmp/rw.dmg -format UDZO -o "$DMG_PATH"
 
           # Re-upload to release (replace the original DMG)
           FILENAME=$(basename "$DMG_PATH")
