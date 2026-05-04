@@ -4,21 +4,25 @@
  */
 
 import "./app.css";
-import "./lib/i18n";
 import App from "./App.svelte";
 import { mount } from "svelte";
+import { initLocale, waitLocale } from "./lib/i18n";
 import { initTheme } from "./lib/stores/theme.svelte";
 import { checkForUpdate } from "./lib/stores/update.svelte";
 
-// 初始化主题
-initTheme();
+async function main() {
+  initTheme();
 
-// 检查版本更新
-checkForUpdate();
+  await initLocale();
+  await waitLocale();
 
-// 将根组件挂载到 #app 元素
-const app = mount(App, {
-  target: document.getElementById("app")!,
-});
+  checkForUpdate();
 
-export default app;
+  const app = mount(App, {
+    target: document.getElementById("app")!,
+  });
+
+  return app;
+}
+
+export default main();
