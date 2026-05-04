@@ -4,7 +4,7 @@
   import { setLocale } from "../../i18n";
   import { getTheme, setTheme, type Theme } from "../../stores/theme.svelte";
   import { getAutoCheck, setAutoCheck, checkForUpdateNow } from "../../stores/update.svelte";
-  import { X, ExternalLink } from "lucide-svelte";
+  import { X, ExternalLink, Sun, Moon, Monitor } from "lucide-svelte";
   import { getVersion } from "../../stores/version";
 
   let { onClose } = $props<{ onClose: () => void }>();
@@ -104,19 +104,19 @@
               ? 'bg-[var(--color-accent)] text-white'
               : 'bg-[var(--color-bg-primary)] text-[var(--color-text-secondary)] hover:bg-[var(--color-accent)]/10'}"
             onclick={() => handleTheme("light")}
-          >☀️</button>
+          ><Sun class="h-3.5 w-3.5" /></button>
           <button
             class="px-3 py-1 text-xs {theme === 'dark'
               ? 'bg-[var(--color-accent)] text-white'
               : 'bg-[var(--color-bg-primary)] text-[var(--color-text-secondary)] hover:bg-[var(--color-accent)]/10'}"
             onclick={() => handleTheme("dark")}
-          >🌙</button>
+          ><Moon class="h-3.5 w-3.5" /></button>
           <button
             class="px-3 py-1 text-xs {theme === 'auto'
               ? 'bg-[var(--color-accent)] text-white'
               : 'bg-[var(--color-bg-primary)] text-[var(--color-text-secondary)] hover:bg-[var(--color-accent)]/10'}"
             onclick={() => handleTheme("auto")}
-          >🖥️</button>
+          ><Monitor class="h-3.5 w-3.5" /></button>
         </div>
       </div>
 
