@@ -29,7 +29,13 @@
     "noConnections": "No connections yet.",
     "noConnectionsHint": "Click \"+ Add\" to create one.",
     "loading": "Loading...",
-    "folderName": "Folder name:"
+    "folderName": "Folder name:",
+    "ctxConnect": "Connect",
+    "ctxDisconnect": "Disconnect",
+    "ctxEdit": "Edit",
+    "ctxTest": "Test Connection",
+    "ctxDelete": "Delete",
+    "deleteConfirm": "Delete connection \"{name}\"?"
   },
   "browser": {
     "root": "Root",

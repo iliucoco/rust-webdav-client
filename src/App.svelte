@@ -4,6 +4,7 @@
   import Sidebar from "./lib/components/layout/Sidebar.svelte";
   import MainContent from "./lib/components/layout/MainContent.svelte";
   import ConfirmDialog from "./lib/components/common/ConfirmDialog.svelte";
+  import ToastContainer from "./lib/components/common/ToastContainer.svelte";
 
   /** 是否已连接到 WebDAV 服务器 */
   let connected = $state(false);
@@ -21,3 +22,6 @@
 
 <!-- 全局确认对话框 -->
 <ConfirmDialog />
+
+<!-- 全局 Toast 通知 -->
+<ToastContainer />

@@ -8,13 +8,19 @@
     loadProfiles,
     connect,
     disconnect,
+    deleteProfile,
+    testConnection,
   } from "../../stores/connections.svelte";
   import { getTheme, toggleTheme } from "../../stores/theme.svelte";
+  import { showConfirm } from "../../stores/dialog.svelte";
+  import { showToast } from "../../stores/toast.svelte";
   import ConnectionForm from "../connection/ConnectionForm.svelte";
+  import ContextMenu from "../common/ContextMenu.svelte";
 
   let { connected = $bindable(false) } = $props();
   let showForm = $state(false);
   let editingId = $state<string | null>(null);
+  let ctxMenu = $state<{ x: number; y: number; profileId: string } | null>(null);
 
   let currentLocale = $state(
     typeof localStorage !== "undefined" ? localStorage.getItem("locale") || "zh-CN" : "zh-CN"
@@ -41,6 +47,41 @@
   function handleEdit(id: string) {
     editingId = id;
     showForm = true;
+  }
+
+  async function handleTest(id: string) {
+    const profile = getProfiles().find((p) => p.id === id);
+    if (!profile) return;
+    try {
+      const ok = await testConnection(profile);
+      if (ok) {
+        showToast($_("connection.testSuccess"), "success");
+      } else {
+        showToast($_("connection.testFailed"), "error");
+      }
+    } catch (e) {
+      showToast($_("connection.testError", { values: { error: String(e) } }), "error");
+    }
+  }
+
+  async function handleDelete(id: string) {
+    const profile = getProfiles().find((p) => p.id === id);
+    const confirmed = await showConfirm(
+      $_("connection.deleteConfirm", { values: { name: profile?.name ?? "" } }),
+      $_("dialog.confirmTitle"),
+    );
+    if (confirmed) {
+      await deleteProfile(id);
+      if (getActiveId() === id) {
+        connected = false;
+      }
+    }
+  }
+
+  function handleContextMenu(e: MouseEvent, profileId: string) {
+    e.preventDefault();
+    e.stopPropagation();
+    ctxMenu = { x: e.clientX, y: e.clientY, profileId };
   }
 
   function toggleLocale() {
@@ -81,7 +122,7 @@
               handleConnect(profile.id);
             }
           }}
-          oncontextmenu={() => handleEdit(profile.id)}
+          oncontextmenu={(e) => handleContextMenu(e, profile.id)}
         >
           <svg class="h-4 w-4 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 12h14M12 5l7 7-7 7" />
@@ -120,4 +161,22 @@
       {/if}
     </button>
   </div>
+
+  {#if ctxMenu}
+    {@const isActive = getActiveId() === ctxMenu.profileId}
+    <ContextMenu
+      x={ctxMenu.x}
+      y={ctxMenu.y}
+      items={[
+        ...(isActive
+          ? [{ label: $_("connection.ctxDisconnect"), icon: "⏏", action: () => { handleDisconnect(); ctxMenu = null; } }]
+          : [{ label: $_("connection.ctxConnect"), icon: "→", action: () => { handleConnect(ctxMenu!.profileId); ctxMenu = null; } }]
+        ),
+        { label: $_("connection.ctxEdit"), icon: "✎", action: () => { handleEdit(ctxMenu!.profileId); ctxMenu = null; } },
+        { label: $_("connection.ctxTest"), icon: "⚡", action: () => { const id = ctxMenu!.profileId; ctxMenu = null; handleTest(id); } },
+        { label: $_("connection.ctxDelete"), icon: "🗑", action: () => { const id = ctxMenu!.profileId; ctxMenu = null; handleDelete(id); } },
+      ]}
+      onClose={() => { ctxMenu = null; }}
+    />
+  {/if}
 </aside>

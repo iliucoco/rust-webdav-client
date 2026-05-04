@@ -27,8 +27,12 @@ export function getToasts() {
 export function showToast(message: string, type: Toast["type"] = "info") {
   const id = nextId++;
   toasts = [...toasts, { id, message, type }];
-  // 3秒后自动移除
   setTimeout(() => {
-    toasts = toasts.filter((t) => t.id !== id);
+    dismissToast(id);
   }, 3000);
+}
+
+/** 手动关闭 Toast */
+export function dismissToast(id: number) {
+  toasts = toasts.filter((t) => t.id !== id);
 }
