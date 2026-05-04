@@ -43,6 +43,7 @@
     "ctxTest": "Verbindung testen",
     "ctxNew": "Neue Verbindung",
     "ctxDelete": "Löschen",
+    "acceptInsecure": "Accept insecure SSL certificates",
     "deleteConfirm": "Verbindung \"{name}\" löschen?"
   },
   "browser": {
@@ -116,5 +117,11 @@
     "checkNow": "Jetzt prüfen",
     "about": "Über",
     "license": "Lizenz"
+  },
+  "titlebar": {
+    "minimize": "Minimieren",
+    "maximize": "Maximieren",
+    "restore": "Wiederherstellen",
+    "close": "Schließen"
   }
 }

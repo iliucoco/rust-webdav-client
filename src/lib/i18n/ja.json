@@ -43,6 +43,7 @@
     "ctxTest": "接続テスト",
     "ctxNew": "新規接続",
     "ctxDelete": "削除",
+    "acceptInsecure": "Accept insecure SSL certificates",
     "deleteConfirm": "接続「{name}」を削除しますか？"
   },
   "browser": {
@@ -116,5 +117,11 @@
     "checkNow": "今すぐ確認",
     "about": "バージョン情報",
     "license": "ライセンス"
+  },
+  "titlebar": {
+    "minimize": "最小化",
+    "maximize": "最大化",
+    "restore": "元に戻す",
+    "close": "閉じる"
   }
 }
