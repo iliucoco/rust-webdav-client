@@ -34,7 +34,6 @@
     "saveFailed": "保存失败：{error}",
     "requiredFields": "请填写地址和用户名后再测试",
     "allRequired": "请填写所有必填项",
-    "noConnections": "暂无连接。",
     "noConnectionsHint": "点击「+ 新建」创建一个连接。",
     "loading": "加载中...",
     "folderName": "文件夹名称：",

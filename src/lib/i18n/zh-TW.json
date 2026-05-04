@@ -34,7 +34,6 @@
     "saveFailed": "儲存失敗：{error}",
     "requiredFields": "請填寫位址和使用者名稱後再測試",
     "allRequired": "請填寫所有必填項",
-    "noConnections": "暫無連線。",
     "noConnectionsHint": "點擊「+ 新增」建立一個連線。",
     "loading": "載入中...",
     "folderName": "資料夾名稱：",
