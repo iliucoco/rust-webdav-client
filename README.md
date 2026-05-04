@@ -17,8 +17,12 @@
   - Word 文档（DOCX 渲染）
   - Excel 表格（XLSX 渲染为 HTML 表格）
 - **在线编辑** — 直接编辑文本文件并保存回 WebDAV 服务器
-- **国际化** — 支持中文 / English 切换，默认跟随系统语言
+- **自动更新** — 启动时自动检查 GitHub Releases 更新，设置中可手动检查
+- **全局设置** — 语言切换、主题切换、自动更新开关、关于与 License 查看
+- **国际化** — 支持 7 种语言：English / 简体中文 / 繁體中文 / 日本語 / 한국어 / Deutsch / Русский
 - **主题切换** — 支持浅色模式 / 深色模式 / 跟随系统三种主题
+- **侧边栏** — 可拖拽调整宽度、折叠/展开，右键菜单管理连接
+- **图标** — 全部使用 lucide-svelte 图标组件
 - **性能优化** — 所有网络请求添加超时保护，支持请求取消
 
 ## 技术栈
@@ -30,6 +34,7 @@
 | WebDAV 协议 | reqwest_dav 0.3 |
 | 前端 | Svelte 5 + TypeScript |
 | 样式 | Tailwind CSS 4 |
+| 图标 | lucide-svelte |
 | 国际化 | svelte-i18n |
 | 文件预览 | pdfjs-dist / docx-preview / SheetJS |
 
@@ -66,13 +71,15 @@ src/lib/                    # Svelte 前端
     toast.svelte.ts         # 通知提示
     theme.svelte.ts         # 主题切换
     dialog.svelte.ts        # 对话框状态
+    update.svelte.ts        # 自动更新检查
+    version.ts              # 版本号
   utils/file-types.ts       # 文件类型判断与格式化
   components/
     layout/                 # 布局组件（Sidebar/Toolbar/Breadcrumb）
     connection/             # 连接表单
     browser/                # 文件浏览器
     preview/                # 各格式预览器（含 VideoPreview 自定义控件）
-    common/                 # 通用组件（ContextMenu/ConfirmDialog）
+    common/                 # 通用组件（ContextMenu/ConfirmDialog/SettingsModal）
 ```
 
 ## 开发
@@ -96,7 +103,7 @@ pnpm tauri build
 
 ## 发布
 
-项目配置了 GitHub Actions 自动构建发布。推送 `v*` 标签即可触发：
+项目配置了 GitHub Actions 自动构建发布。推送 `v*` 标签即可触发，版本号自动从 git tag 同步到 `package.json` 和 `Cargo.toml`：
 
 ```bash
 git tag v0.1.0
@@ -106,21 +113,6 @@ git push origin v0.1.0
 构建目标：
 
 - macOS Apple Silicon (`.dmg`)
-- macOS Intel (`.dmg`)
 - Windows x64 (`.exe` 安装包)
 
 构建完成后自动上传到 GitHub Releases，手动确认草稿后发布。
-
-## 兼容性
-
-支持标准 WebDAV 协议，已测试兼容：
-
-- Nextcloud
-- Apache mod_dav
-- Nginx WebDAV 模块
-- 群晖 WebDAV Server
-- 其他标准 WebDAV 服务器
-
-## License
-
-MIT
