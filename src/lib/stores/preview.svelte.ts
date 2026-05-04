@@ -113,7 +113,7 @@ export async function openFile(
       } else {
         throw new Error("Unsupported data type received");
       }
-      data = bytes.buffer;
+      data = bytes.buffer as ArrayBuffer;
     }
   } catch (e) {
     console.error("Preview error:", e);
