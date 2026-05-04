@@ -16,3 +16,5 @@ pub mod operations;
 pub mod preview;
 /// 编辑命令 - 文本文件读写
 pub mod edit;
+/// 应用命令 - 退出应用
+pub mod app;

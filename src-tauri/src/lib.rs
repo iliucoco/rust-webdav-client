@@ -5,6 +5,7 @@ mod error;
 mod streaming;
 mod webdav;
 
+use tauri::{Emitter, Manager, RunEvent};
 use webdav::AppState;
 
 #[cfg_attr(mobile, tauri::mobile_entry_point)]
@@ -40,7 +41,22 @@ pub fn run() {
             commands::preview::stop_video_stream,
             commands::edit::get_text_content,
             commands::edit::save_text_content,
+            commands::app::confirm_exit,
         ])
-        .run(tauri::generate_context!())
-        .expect("error while running tauri application");
+        .on_window_event(|window, event| {
+            if let tauri::WindowEvent::CloseRequested { api, .. } = event {
+                api.prevent_close();
+                let _ = window.emit("close-requested", ());
+            }
+        })
+        .build(tauri::generate_context!())
+        .expect("error while building tauri application")
+        .run(|app, event| {
+            if let RunEvent::ExitRequested { api, .. } = event {
+                api.prevent_exit();
+                if let Some(window) = app.get_webview_window("main") {
+                    let _ = window.emit("close-requested", ());
+                }
+            }
+        });
 }

@@ -1,0 +1,114 @@
+{
+  "app": {
+    "title": "WebDAV 用戶端",
+    "quitConfirm": "確定要結束應用程式嗎？",
+    "quit": "結束",
+    "quitCancel": "取消"
+  },
+  "connection": {
+    "title": "連線",
+    "add": "+ 新增",
+    "new": "新增連線",
+    "edit": "編輯連線",
+    "name": "名稱",
+    "namePlaceholder": "名稱",
+    "url": "位址",
+    "urlPlaceholder": "WebDAV 位址（如 https://dav.example.com/）",
+    "username": "使用者名稱",
+    "usernamePlaceholder": "使用者名稱",
+    "password": "密碼",
+    "passwordPlaceholder": "密碼",
+    "save": "儲存",
+    "test": "測試",
+    "testing": "測試中...",
+    "cancel": "取消",
+    "delete": "刪除",
+    "testSuccess": "連線成功！",
+    "testFailed": "連線失敗",
+    "testError": "連線錯誤：{error}",
+    "saveSuccess": "連線已儲存",
+    "saveFailed": "儲存失敗：{error}",
+    "requiredFields": "請填寫位址和使用者名稱後再測試",
+    "allRequired": "請填寫所有必填項",
+    "noConnections": "暫無連線。",
+    "noConnectionsHint": "點擊「+ 新增」建立一個連線。",
+    "loading": "載入中...",
+    "folderName": "資料夾名稱：",
+    "ctxConnect": "連線",
+    "ctxDisconnect": "中斷連線",
+    "ctxEdit": "編輯",
+    "ctxTest": "測試連線",
+    "ctxDelete": "刪除",
+    "deleteConfirm": "確定刪除連線「{name}」嗎？"
+  },
+  "browser": {
+    "root": "根目錄",
+    "name": "名稱",
+    "size": "大小",
+    "modified": "修改時間",
+    "empty": "此資料夾為空",
+    "folder": "資料夾",
+    "file": "檔案",
+    "loading": "載入中..."
+  },
+  "toolbar": {
+    "upload": "上傳檔案",
+    "newFolder": "新增資料夾",
+    "delete": "刪除所選",
+    "refresh": "重新整理",
+    "uploadSuccess": "檔案上傳成功",
+    "uploadFailed": "上傳失敗：{error}",
+    "folderCreated": "資料夾已建立",
+    "folderFailed": "建立資料夾失敗：{error}",
+    "deleted": "刪除成功",
+    "deleteFailed": "刪除失敗：{error}",
+    "deleteConfirm": "確定刪除 {count} 個項目？"
+  },
+  "preview": {
+    "close": "關閉預覽",
+    "edit": "編輯",
+    "preview": "預覽",
+    "save": "儲存 (Ctrl+S)",
+    "fileSaved": "檔案已儲存",
+    "saveFailed": "儲存失敗：{error}",
+    "notAvailable": "此檔案類型暫不支援預覽。",
+    "downloadHint": "你可以下載檔案到本機查看。",
+    "prev": "上一頁",
+    "next": "下一頁"
+  },
+  "empty": {
+    "title": "未連線",
+    "subtitle": "請從側邊欄選擇或新增一個 WebDAV 連線。"
+  },
+  "lang": {
+    "zh": "中文",
+    "en": "English"
+  },
+  "dialog": {
+    "confirmTitle": "確認操作",
+    "confirmOk": "確定",
+    "confirmCancel": "取消",
+    "alertTitle": "提示",
+    "deleteConfirm": "確定刪除 \"{name}\" 嗎？\n此操作無法復原。",
+    "deleteConfirmMany": "確定刪除這 {count} 個項目嗎？\n此操作無法復原。",
+    "renameConfirm": "確定將 \"{oldName}\" 重新命名為 \"{newName}\" 嗎？",
+    "copyConfirm": "確定在目前目錄下建立 \"{name}\" 的副本嗎？",
+    "copyConfirmMany": "確定複製 {count} 個項目到 \"{target}\" 嗎？",
+    "moveConfirm": "確定將 \"{name}\" 移動到目前目錄嗎？",
+    "moveConfirmMany": "確定移動 {count} 個項目到 \"{target}\" 嗎？",
+    "saveConfirm": "確定儲存對 \"{name}\" 的修改嗎？"
+  },
+  "update": {
+    "available": "發現新版本 {version}，請前往下載",
+    "upToDate": "已是最新版本",
+    "checkFailed": "檢查更新失敗",
+    "download": "前往下載"
+  },
+  "settings": {
+    "title": "設定",
+    "language": "語言",
+    "theme": "主題",
+    "autoUpdate": "自動檢查更新",
+    "checkNow": "立即檢查"
+  }
+}

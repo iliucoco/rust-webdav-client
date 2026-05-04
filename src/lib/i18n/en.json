@@ -1,6 +1,9 @@
 {
   "app": {
-    "title": "WebDAV Client"
+    "title": "WebDAV Client",
+    "quitConfirm": "Are you sure you want to quit?",
+    "quit": "Quit",
+    "quitCancel": "Cancel"
   },
   "connection": {
     "title": "Connections",

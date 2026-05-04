@@ -1,0 +1,114 @@
+{
+  "app": {
+    "title": "WebDAV クライアント",
+    "quitConfirm": "アプリケーションを終了しますか？",
+    "quit": "終了",
+    "quitCancel": "キャンセル"
+  },
+  "connection": {
+    "title": "接続",
+    "add": "+ 新規",
+    "new": "新規接続",
+    "edit": "接続の編集",
+    "name": "名前",
+    "namePlaceholder": "名前",
+    "url": "URL",
+    "urlPlaceholder": "WebDAV URL（例：https://dav.example.com/）",
+    "username": "ユーザー名",
+    "usernamePlaceholder": "ユーザー名",
+    "password": "パスワード",
+    "passwordPlaceholder": "パスワード",
+    "save": "保存",
+    "test": "テスト",
+    "testing": "テスト中...",
+    "cancel": "キャンセル",
+    "delete": "削除",
+    "testSuccess": "接続に成功しました！",
+    "testFailed": "接続に失敗しました",
+    "testError": "接続エラー：{error}",
+    "saveSuccess": "接続を保存しました",
+    "saveFailed": "保存に失敗しました：{error}",
+    "requiredFields": "URLとユーザー名を入力してからテストしてください",
+    "allRequired": "すべての必須項目を入力してください",
+    "noConnections": "接続がありません。",
+    "noConnectionsHint": "「+ 新規」をクリックして接続を作成してください。",
+    "loading": "読み込み中...",
+    "folderName": "フォルダー名：",
+    "ctxConnect": "接続",
+    "ctxDisconnect": "切断",
+    "ctxEdit": "編集",
+    "ctxTest": "接続テスト",
+    "ctxDelete": "削除",
+    "deleteConfirm": "接続「{name}」を削除しますか？"
+  },
+  "browser": {
+    "root": "ルート",
+    "name": "名前",
+    "size": "サイズ",
+    "modified": "更新日時",
+    "empty": "このフォルダーは空です",
+    "folder": "フォルダー",
+    "file": "ファイル",
+    "loading": "読み込み中..."
+  },
+  "toolbar": {
+    "upload": "ファイルをアップロード",
+    "newFolder": "新しいフォルダー",
+    "delete": "選択を削除",
+    "refresh": "更新",
+    "uploadSuccess": "ファイルのアップロードに成功しました",
+    "uploadFailed": "アップロードに失敗しました：{error}",
+    "folderCreated": "フォルダーを作成しました",
+    "folderFailed": "フォルダーの作成に失敗しました：{error}",
+    "deleted": "削除しました",
+    "deleteFailed": "削除に失敗しました：{error}",
+    "deleteConfirm": "{count} 件の項目を削除しますか？"
+  },
+  "preview": {
+    "close": "プレビューを閉じる",
+    "edit": "編集",
+    "preview": "プレビュー",
+    "save": "保存 (Ctrl+S)",
+    "fileSaved": "ファイルを保存しました",
+    "saveFailed": "保存に失敗しました：{error}",
+    "notAvailable": "このファイル形式のプレビューはサポートされていません。",
+    "downloadHint": "ファイルをダウンロードしてローカルで確認できます。",
+    "prev": "前へ",
+    "next": "次へ"
+  },
+  "empty": {
+    "title": "未接続",
+    "subtitle": "サイドバーからWebDAV接続を選択または新規作成してください。"
+  },
+  "lang": {
+    "zh": "中文",
+    "en": "English"
+  },
+  "dialog": {
+    "confirmTitle": "確認",
+    "confirmOk": "OK",
+    "confirmCancel": "キャンセル",
+    "alertTitle": "お知らせ",
+    "deleteConfirm": "「{name}」を削除しますか？\nこの操作は元に戻せません。",
+    "deleteConfirmMany": "{count} 件の項目を削除しますか？\nこの操作は元に戻せません。",
+    "renameConfirm": "「{oldName}」を「{newName}」に変更しますか？",
+    "copyConfirm": "現在のディレクトリに「{name}」のコピーを作成しますか？",
+    "copyConfirmMany": "{count} 件の項目を「{target}」にコピーしますか？",
+    "moveConfirm": "「{name}」を現在のディレクトリに移動しますか？",
+    "moveConfirmMany": "{count} 件の項目を「{target}」に移動しますか？",
+    "saveConfirm": "「{name}」の変更を保存しますか？"
+  },
+  "update": {
+    "available": "新バージョン {version} が利用可能です",
+    "upToDate": "最新バージョンです",
+    "checkFailed": "アップデートの確認に失敗しました",
+    "download": "ダウンロード"
+  },
+  "settings": {
+    "title": "設定",
+    "language": "言語",
+    "theme": "テーマ",
+    "autoUpdate": "自動アップデート確認",
+    "checkNow": "今すぐ確認"
+  }
+}

@@ -6,8 +6,18 @@
 
   let { onClose } = $props<{ onClose: () => void }>();
 
+  const locales = [
+    { code: "en", label: "English" },
+    { code: "zh-CN", label: "简体中文" },
+    { code: "zh-TW", label: "繁體中文" },
+    { code: "ja", label: "日本語" },
+    { code: "ko", label: "한국어" },
+    { code: "de", label: "Deutsch" },
+    { code: "ru", label: "Русский" },
+  ];
+
   let locale = $state(
-    typeof localStorage !== "undefined" ? localStorage.getItem("locale") || "zh-CN" : "zh-CN"
+    typeof localStorage !== "undefined" ? localStorage.getItem("locale") || "en" : "en"
   );
   let theme = $state<Theme>(getTheme());
   let autoCheck = $state(getAutoCheck());
@@ -49,20 +59,15 @@
       <!-- Language -->
       <div class="flex items-center justify-between">
         <span class="text-sm text-[var(--color-text-primary)]">{$_("settings.language")}</span>
-        <div class="flex rounded-md border border-[var(--color-border)] overflow-hidden">
-          <button
-            class="px-3 py-1 text-xs {locale === 'zh-CN'
-              ? 'bg-[var(--color-accent)] text-white'
-              : 'bg-[var(--color-bg-primary)] text-[var(--color-text-secondary)] hover:bg-[var(--color-accent)]/10'}"
-            onclick={() => handleLocale("zh-CN")}
-          >中文</button>
-          <button
-            class="px-3 py-1 text-xs {locale === 'en'
-              ? 'bg-[var(--color-accent)] text-white'
-              : 'bg-[var(--color-bg-primary)] text-[var(--color-text-secondary)] hover:bg-[var(--color-accent)]/10'}"
-            onclick={() => handleLocale("en")}
-          >English</button>
-        </div>
+        <select
+          class="rounded-md border border-[var(--color-border)] bg-[var(--color-bg-primary)] px-2 py-1 text-xs text-[var(--color-text-primary)] outline-none focus:border-[var(--color-accent)]"
+          bind:value={locale}
+          onchange={() => handleLocale(locale)}
+        >
+          {#each locales as loc}
+            <option value={loc.code}>{loc.label}</option>
+          {/each}
+        </select>
       </div>
 
       <!-- Theme -->

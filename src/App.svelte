@@ -1,6 +1,10 @@
 <!-- 应用根组件 - 整体布局容器 -->
 <script lang="ts">
   import { onMount } from "svelte";
+  import { getCurrentWindow } from "@tauri-apps/api/window";
+  import { invoke } from "@tauri-apps/api/core";
+  import { _ } from "svelte-i18n";
+  import { showConfirm } from "./lib/stores/dialog.svelte";
   import Sidebar from "./lib/components/layout/Sidebar.svelte";
   import MainContent from "./lib/components/layout/MainContent.svelte";
   import ConfirmDialog from "./lib/components/common/ConfirmDialog.svelte";
@@ -10,7 +14,20 @@
   let connected = $state(false);
 
   onMount(() => {
-    // 后续将由连接状态管理
+    const unlisten = getCurrentWindow().listen("close-requested", async () => {
+      const confirmed = await showConfirm(
+        $_("app.quitConfirm"),
+        $_("dialog.confirmTitle"),
+        $_("app.quit"),
+        $_("app.quitCancel"),
+      );
+      if (confirmed) {
+        await invoke("confirm_exit");
+      }
+    });
+    return () => {
+      unlisten.then((fn) => fn());
+    };
   });
 </script>
 

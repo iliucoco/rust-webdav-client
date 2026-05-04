@@ -1,6 +1,9 @@
 {
   "app": {
-    "title": "WebDAV 客户端"
+    "title": "WebDAV 客户端",
+    "quitConfirm": "确定要退出应用吗？",
+    "quit": "退出",
+    "quitCancel": "取消"
   },
   "connection": {
     "title": "连接",
