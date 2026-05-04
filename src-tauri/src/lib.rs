@@ -51,6 +51,7 @@ pub fn run() {
             commands::edit::get_text_content,
             commands::edit::save_text_content,
             commands::app::confirm_exit,
+            commands::app::get_system_locale,
         ])
         .setup(|app| {
             let quit = MenuItemBuilder::with_id("custom_quit", "Quit WebDAV Client")

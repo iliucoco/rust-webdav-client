@@ -24,4 +24,5 @@ thiserror = "2"
 uuid = { version = "1", features = ["v4"] }
 base64 = "0.22"
 log = "0.4"
+sys-locale = "0.3"
 tauri-plugin-shell = "2.3.5"
