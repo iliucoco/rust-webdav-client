@@ -93,5 +93,18 @@
     "moveConfirm": "Move \"{name}\" to current directory?",
     "moveConfirmMany": "Move {count} items to \"{target}\"?",
     "saveConfirm": "Save changes to \"{name}\"?"
+  },
+  "update": {
+    "available": "New version {version} available",
+    "upToDate": "Already up to date",
+    "checkFailed": "Failed to check for updates",
+    "download": "Download"
+  },
+  "settings": {
+    "title": "Settings",
+    "language": "Language",
+    "theme": "Theme",
+    "autoUpdate": "Auto Check Updates",
+    "checkNow": "Check Now"
   }
 }

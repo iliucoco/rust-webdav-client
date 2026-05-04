@@ -11,6 +11,10 @@ export interface Toast {
   message: string;
   /** 消息类型 */
   type: "success" | "error" | "info";
+  /** 可选链接 */
+  link?: string;
+  /** 链接文本 */
+  linkLabel?: string;
 }
 
 /** 当前显示的 Toast 列表 */
@@ -23,13 +27,21 @@ export function getToasts() {
   return toasts;
 }
 
-/** 显示 Toast 通知，3秒后自动消失 */
-export function showToast(message: string, type: Toast["type"] = "info") {
+/** 显示 Toast 通知，默认3秒后自动消失；duration=0 时不自动消失 */
+export function showToast(
+  message: string,
+  type: Toast["type"] = "info",
+  duration = 3000,
+  link?: string,
+  linkLabel?: string,
+) {
   const id = nextId++;
-  toasts = [...toasts, { id, message, type }];
-  setTimeout(() => {
-    dismissToast(id);
-  }, 3000);
+  toasts = [...toasts, { id, message, type, link, linkLabel }];
+  if (duration > 0) {
+    setTimeout(() => {
+      dismissToast(id);
+    }, duration);
+  }
 }
 
 /** 手动关闭 Toast */

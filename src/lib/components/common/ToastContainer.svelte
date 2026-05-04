@@ -13,6 +13,14 @@
             : 'border-[var(--color-border)] bg-[var(--color-bg-primary)] text-[var(--color-text-primary)]'}"
       >
         <span class="flex-1">{toast.message}</span>
+        {#if toast.link}
+          <a
+            href={toast.link}
+            target="_blank"
+            rel="noopener noreferrer"
+            class="shrink-0 rounded px-1.5 py-0.5 text-xs font-medium text-[var(--color-accent)] hover:underline"
+          >{toast.linkLabel}</a>
+        {/if}
         <button
           class="shrink-0 opacity-60 hover:opacity-100"
           onclick={() => dismissToast(toast.id)}

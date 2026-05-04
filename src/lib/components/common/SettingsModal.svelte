@@ -1,0 +1,119 @@
+<script lang="ts">
+  import { _ } from "svelte-i18n";
+  import { setLocale } from "../../i18n";
+  import { getTheme, setTheme, type Theme } from "../../stores/theme.svelte";
+  import { getAutoCheck, setAutoCheck, checkForUpdateNow } from "../../stores/update.svelte";
+
+  let { onClose } = $props<{ onClose: () => void }>();
+
+  let locale = $state(
+    typeof localStorage !== "undefined" ? localStorage.getItem("locale") || "zh-CN" : "zh-CN"
+  );
+  let theme = $state<Theme>(getTheme());
+  let autoCheck = $state(getAutoCheck());
+
+  function handleLocale(next: string) {
+    locale = next;
+    setLocale(next);
+  }
+
+  function handleTheme(next: Theme) {
+    theme = next;
+    setTheme(next);
+  }
+
+  function handleAutoCheck() {
+    autoCheck = !autoCheck;
+    setAutoCheck(autoCheck);
+  }
+</script>
+
+<div class="fixed inset-0 z-50 flex items-center justify-center bg-black/50" onclick={onClose}>
+  <div
+    class="w-full max-w-sm rounded-lg border border-[var(--color-border)] bg-[var(--color-bg-primary)] shadow-xl"
+    onclick={(e) => e.stopPropagation()}
+  >
+    <div class="flex items-center justify-between border-b border-[var(--color-border)] px-5 py-3">
+      <h3 class="text-sm font-semibold text-[var(--color-text-primary)]">{$_("settings.title")}</h3>
+      <button
+        class="rounded-md p-1 text-[var(--color-text-secondary)] hover:text-[var(--color-text-primary)]"
+        onclick={onClose}
+      >
+        <svg class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+        </svg>
+      </button>
+    </div>
+
+    <div class="space-y-4 p-5">
+      <!-- Language -->
+      <div class="flex items-center justify-between">
+        <span class="text-sm text-[var(--color-text-primary)]">{$_("settings.language")}</span>
+        <div class="flex rounded-md border border-[var(--color-border)] overflow-hidden">
+          <button
+            class="px-3 py-1 text-xs {locale === 'zh-CN'
+              ? 'bg-[var(--color-accent)] text-white'
+              : 'bg-[var(--color-bg-primary)] text-[var(--color-text-secondary)] hover:bg-[var(--color-accent)]/10'}"
+            onclick={() => handleLocale("zh-CN")}
+          >中文</button>
+          <button
+            class="px-3 py-1 text-xs {locale === 'en'
+              ? 'bg-[var(--color-accent)] text-white'
+              : 'bg-[var(--color-bg-primary)] text-[var(--color-text-secondary)] hover:bg-[var(--color-accent)]/10'}"
+            onclick={() => handleLocale("en")}
+          >English</button>
+        </div>
+      </div>
+
+      <!-- Theme -->
+      <div class="flex items-center justify-between">
+        <span class="text-sm text-[var(--color-text-primary)]">{$_("settings.theme")}</span>
+        <div class="flex rounded-md border border-[var(--color-border)] overflow-hidden">
+          <button
+            class="px-3 py-1 text-xs {theme === 'light'
+              ? 'bg-[var(--color-accent)] text-white'
+              : 'bg-[var(--color-bg-primary)] text-[var(--color-text-secondary)] hover:bg-[var(--color-accent)]/10'}"
+            onclick={() => handleTheme("light")}
+          >☀️</button>
+          <button
+            class="px-3 py-1 text-xs {theme === 'dark'
+              ? 'bg-[var(--color-accent)] text-white'
+              : 'bg-[var(--color-bg-primary)] text-[var(--color-text-secondary)] hover:bg-[var(--color-accent)]/10'}"
+            onclick={() => handleTheme("dark")}
+          >🌙</button>
+          <button
+            class="px-3 py-1 text-xs {theme === 'auto'
+              ? 'bg-[var(--color-accent)] text-white'
+              : 'bg-[var(--color-bg-primary)] text-[var(--color-text-secondary)] hover:bg-[var(--color-accent)]/10'}"
+            onclick={() => handleTheme("auto")}
+          >🖥️</button>
+        </div>
+      </div>
+
+      <!-- Auto check update -->
+      <div class="flex items-center justify-between">
+        <span class="text-sm text-[var(--color-text-primary)]">{$_("settings.autoUpdate")}</span>
+        <div class="flex items-center gap-2">
+          <button
+            class="rounded-md border border-[var(--color-border)] px-2 py-0.5 text-xs text-[var(--color-text-secondary)] hover:bg-[var(--color-accent)]/10 hover:text-[var(--color-accent)]"
+            onclick={checkForUpdateNow}
+          >
+            {$_("settings.checkNow")}
+          </button>
+          <button
+            class="relative h-5 w-9 rounded-full transition-colors {autoCheck
+              ? 'bg-[var(--color-accent)]'
+              : 'bg-[var(--color-border)]'}"
+            onclick={handleAutoCheck}
+          >
+            <span
+              class="absolute top-0.5 h-4 w-4 rounded-full bg-white shadow transition-transform {autoCheck
+                ? 'left-[18px]'
+                : 'left-0.5'}"
+            ></span>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

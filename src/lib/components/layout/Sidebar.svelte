@@ -1,6 +1,5 @@
 <script lang="ts">
   import { _ } from "svelte-i18n";
-  import { setLocale } from "../../i18n";
   import {
     getProfiles,
     getActiveId,
@@ -11,20 +10,17 @@
     deleteProfile,
     testConnection,
   } from "../../stores/connections.svelte";
-  import { getTheme, toggleTheme } from "../../stores/theme.svelte";
   import { showConfirm } from "../../stores/dialog.svelte";
   import { showToast } from "../../stores/toast.svelte";
   import ConnectionForm from "../connection/ConnectionForm.svelte";
   import ContextMenu from "../common/ContextMenu.svelte";
+  import SettingsModal from "../common/SettingsModal.svelte";
 
   let { connected = $bindable(false) } = $props();
   let showForm = $state(false);
   let editingId = $state<string | null>(null);
   let ctxMenu = $state<{ x: number; y: number; profileId: string } | null>(null);
-
-  let currentLocale = $state(
-    typeof localStorage !== "undefined" ? localStorage.getItem("locale") || "zh-CN" : "zh-CN"
-  );
+  let showSettings = $state(false);
 
   $effect(() => {
     loadProfiles();
@@ -83,12 +79,6 @@
     e.stopPropagation();
     ctxMenu = { x: e.clientX, y: e.clientY, profileId };
   }
-
-  function toggleLocale() {
-    const next = currentLocale === "zh-CN" ? "en" : "zh-CN";
-    currentLocale = next;
-    setLocale(next);
-  }
 </script>
 
 <aside class="flex h-full w-64 flex-col border-r border-[var(--color-border)] bg-[var(--color-bg-sidebar)]">
@@ -140,25 +130,16 @@
     />
   {/if}
 
-  <div class="border-t border-[var(--color-border)] px-4 py-2 flex gap-2">
+  <div class="border-t border-[var(--color-border)] px-4 py-2">
     <button
-      class="flex-1 rounded-md px-3 py-1.5 text-xs text-[var(--color-text-secondary)] hover:bg-[var(--color-accent)]/10 hover:text-[var(--color-accent)]"
-      onclick={toggleLocale}
+      class="flex w-full items-center justify-center gap-1.5 rounded-md px-3 py-1.5 text-xs text-[var(--color-text-secondary)] hover:bg-[var(--color-accent)]/10 hover:text-[var(--color-accent)]"
+      onclick={() => showSettings = true}
     >
-      {currentLocale === "zh-CN" ? "English" : "中文"}
-    </button>
-    <button
-      class="shrink-0 rounded-md px-3 py-1.5 text-xs text-[var(--color-text-secondary)] hover:bg-[var(--color-accent)]/10 hover:text-[var(--color-accent)]"
-      onclick={toggleTheme}
-      title="切换主题（当前：{getTheme()}）"
-    >
-      {#if getTheme() === "light"}
-        ☀️
-      {:else if getTheme() === "dark"}
-        🌙
-      {:else}
-        🖥️
-      {/if}
+      <svg class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.066 2.573c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.573 1.066c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.066-2.573c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z" />
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+      </svg>
+      {$_("settings.title")}
     </button>
   </div>
 
@@ -178,5 +159,9 @@
       ]}
       onClose={() => { ctxMenu = null; }}
     />
+  {/if}
+
+  {#if showSettings}
+    <SettingsModal onClose={() => { showSettings = false; }} />
   {/if}
 </aside>
