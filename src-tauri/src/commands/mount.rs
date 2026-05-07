@@ -156,7 +156,8 @@ pub async fn auto_mount(
         }
         for mapping in &mut profile.mounts {
             let url = build_webdav_url(&profile.url, &mapping.remote_path);
-            match platform_mount(&url, &profile.username, &profile.password, None) {
+            let saved_path = mapping.local_path.as_deref();
+            match platform_mount(&url, &profile.username, &profile.password, saved_path) {
                 Ok(local_path) => {
                     let key = format!("{}::{}", profile.id, mapping.remote_path);
                     let mut mounts = state.active_mounts.lock().map_err(mutex_err)?;
@@ -252,41 +253,54 @@ fn mutex_err(e: std::sync::PoisonError<std::sync::MutexGuard<'_, HashMap<String,
 
 // ---- 平台相关 ----
 
+/// 从 URL 中提取主机名，用于 Keychain 凭据匹配
+fn extract_host(url: &str) -> Option<&str> {
+    let after_scheme = url.split("://").nth(1)?;
+    let end = after_scheme
+        .find(&['/', ':'] as &[char])
+        .unwrap_or(after_scheme.len());
+    Some(&after_scheme[..end])
+}
+
+/// macOS: 使用 mount_webdav 挂载到用户指定的路径
+#[cfg(target_os = "macos")]
+fn mount_webdav_at_path(url: &str, username: &str, password: &str, mount_point: &str) -> Result<String, AppError> {
+    // 确保挂载点目录存在
+    std::fs::create_dir_all(mount_point)
+        .map_err(|e| AppError::WebDav(format!("cannot create mount point {}: {}", mount_point, e)))?;
+
+    // 将凭据写入 Keychain，供 mount_webdav 查找
+    if let Some(server) = extract_host(url) {
+        let _ = Command::new("security")
+            .args([
+                "add-internet-password",
+                "-U",
+                "-a", username,
+                "-s", server,
+                "-w", password,
+            ])
+            .output();
+    }
+
+    // 使用 mount_webdav 挂载到指定路径
+    let output = Command::new("/usr/sbin/mount_webdav")
+        .args(["-a", username, url, mount_point])
+        .output()
+        .map_err(|e| AppError::WebDav(format!("mount_webdav failed: {}", e)))?;
+
+    if !output.status.success() {
+        let stderr = String::from_utf8_lossy(&output.stderr);
+        return Err(AppError::WebDav(format!("mount failed: {}", stderr.trim())));
+    }
+
+    Ok(mount_point.to_string())
+}
+
 #[cfg(target_os = "macos")]
 fn platform_mount(url: &str, username: &str, password: &str, preferred_path: Option<&str>) -> Result<String, AppError> {
-    // 如果用户指定了挂载点，先用 mount_webdav 尝试
+    // 用户指定挂载点时，使用 mount_webdav 直接挂载到指定路径
     if let Some(mount_point) = preferred_path {
-        // 确保挂载点目录存在
-        std::fs::create_dir_all(mount_point)
-            .map_err(|e| AppError::WebDav(format!("cannot create mount point {}: {}", mount_point, e)))?;
-
-        // 先尝试用 mount_webdav（需要写入 Keychain 凭据）
-        // 实际使用 osascript mount volume，系统会自动选择挂载点名称
-        let script = format!(
-            "mount volume \"{}\" as user name \"{}\" with password \"{}\"",
-            url, username, password
-        );
-        let output = Command::new("osascript")
-            .args(["-e", &script])
-            .output()
-            .map_err(|e| AppError::WebDav(format!("osascript failed: {}", e)))?;
-
-        if !output.status.success() {
-            let stderr = String::from_utf8_lossy(&output.stderr);
-            return Err(AppError::WebDav(format!("mount failed: {}", stderr.trim())));
-        }
-
-        // osascript mount volume 不支持指定挂载点，系统自行决定
-        // 找到新挂载点后检查是否与用户期望的名称匹配
-        // 返回实际挂载路径
-        let after = list_volumes()?;
-        // 取 basename 做简单匹配
-        let preferred_name = mount_point.trim_end_matches('/').rsplit('/').next().unwrap_or("");
-        let found = after.iter().find(|v| {
-            let name = v.trim_end_matches('/').rsplit('/').next().unwrap_or("");
-            name == preferred_name
-        });
-        return Ok(found.cloned().unwrap_or_else(|| mount_point.to_string()));
+        return mount_webdav_at_path(url, username, password, mount_point);
     }
 
     // 自动模式：比较 /Volumes/ 前后差异
